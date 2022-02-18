@@ -230,8 +230,11 @@ class NevergradOptimizer(BaseAlgorithm):
         New parameters must be compliant with the problem's domain `orion.algo.space.Space`.
 
         """
+        attempts = 0
+        max_attempts = num + 5
         trials = []
-        while len(trials) < num and self._can_produce():
+        while len(trials) < num and attempts < max_attempts and self._can_produce():
+            attempts += 1
             trial = self._ask()
             if trial is not None:
                 trials.append(trial)
