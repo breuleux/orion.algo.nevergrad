@@ -6,6 +6,15 @@ from orion.core.utils import backward
 from orion.testing.algo import BaseAlgoTests, phase
 
 WORKING = [
+    "cGA",
+    "CMA",
+    "DE",
+    "DiagonalCMA",
+    "MetaModel",
+    "MixES",
+    "MultiCMA",
+    "MutDE",
+    "NaiveTBPSA",
     "NGO",
     "NGOpt",
     "NGOpt10",
@@ -21,18 +30,6 @@ WORKING = [
     "NGOpt4",
     "NGOpt8",
     "NGOptBase",
-    "TBPSA",
-    "TripleCMA",
-    "TwoPointsDE",
-    "cGA",
-    "CMA",
-    "DE",
-    "DiagonalCMA",
-    "MetaModel",
-    "MixES",
-    "MultiCMA",
-    "MutDE",
-    "NaiveTBPSA",
     "NoisyDE",
     "ORandomSearch",
     "PolyCMA",
@@ -45,6 +42,9 @@ WORKING = [
     "RescaledCMA",
     "RotatedTwoPointsDE",
     "Shiwa",
+    "TBPSA",
+    "TripleCMA",
+    "TwoPointsDE",
 ]
 
 NOT_WORKING = [
@@ -118,7 +118,7 @@ NOT_WORKING = [
     "ScrHaltonSearchPlusMiddlePoint",
     "ScrHammersleySearch",
     "ScrHammersleySearchPlusMiddlePoint",
-    "SparseDoubleFastGADiscreteOnePlusOne",   
+    "SparseDoubleFastGADiscreteOnePlusOne",
 ]
 
 HANGING = [
@@ -155,7 +155,7 @@ class TestNevergradOptimizer(BaseAlgoTests):
     algo_name = "nevergradoptimizer"
     config = {
         "seed": 1234,  # Because this is so random
-        "budget": 100,
+        "budget": 200,
     }
 
     @phase
