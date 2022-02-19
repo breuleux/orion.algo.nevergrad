@@ -18,21 +18,42 @@ _not_serializable = {
 
 _sequential = {
     "test_seed_rng": xfail(reason="Cannot ask before tell of the last ask"),
+    "test_seed_rng_init": xfail(reason="First generated point is deterministic"),
+}
+
+_no_tell_without_ask = {
+    "test_observe": xfail(reason="Cannot observe a point that was not suggested"),
+    "test_is_done_cardinality": xfail(
+        reason="Cannot observe a point that was not suggested"
+    ),
 }
 
 _not_parallel = {"test_suggest_n": xfail(reason="Cannot suggest more than one point")}
 
+_CAN_suggest_more_than_one = {"test_suggest_n": None}
+
+_max_trials_hangs = {"test_is_done_max_trials": "skip"}
+
+
 WORKING = {
     "cGA": {},
+    "ASCMADEthird": {},
+    "AdaptiveDiscreteOnePlusOne": _deterministic_first_point,
+    "AlmostRotationInvariantDE": {},
     "AvgMetaRecenteringNoHull": _deterministic_first_point,
     "CM": {},
     "CMA": {},
+    "CauchyLHSSearch": {},
+    "CauchyOnePlusOne": _deterministic_first_point,
     "CauchyScrHammersleySearch": _deterministic_first_point,
+    "ChainMetaModelSQP": _CAN_suggest_more_than_one,
+    "CmaFmin2": _sequential | _not_serializable,
     "DE": {},
     "DiagonalCMA": {},
     "DiscreteBSOOnePlusOne": _deterministic_first_point,
     "DiscreteLenglerOnePlusOne": _deterministic_first_point,
     "DiscreteOnePlusOne": _deterministic_first_point,
+    "EDA": _no_tell_without_ask,
     "ES": {},
     "FCMA": {},
     "GeneticDE": {},
@@ -46,10 +67,14 @@ WORKING = {
     "LHSSearch": {},
     "LhsDE": {},
     "MetaModel": {},
+    "MetaModelOnePlusOne": _deterministic_first_point,
     "MetaRecentering": _deterministic_first_point,
+    "MetaTuneRecentering": _deterministic_first_point,
     "MixES": {},
     "MultiCMA": {},
+    "MultiScaleCMA": {},
     "MutDE": {},
+    "NaiveIsoEMNA": _no_tell_without_ask,
     "NaiveTBPSA": {},
     "NGO": {},
     "NGOpt": {},
@@ -66,20 +91,33 @@ WORKING = {
     "NGOpt4": {},
     "NGOpt8": {},
     "NGOptBase": {},
+    "NoisyBandit": {},
     "NoisyDE": {},
+    "NoisyOnePlusOne": _deterministic_first_point,
+    "NonNSGAIIES": {},
+    "OnePlusOne": _deterministic_first_point,
+    "OptimisticDiscreteOnePlusOne": _deterministic_first_point,
+    "OptimisticNoisyOnePlusOne": _deterministic_first_point,
     "ORandomSearch": {},
     "OScrHammersleySearch": _deterministic_first_point,
     "PolyCMA": {},
+    "PortfolioDiscreteOnePlusOne": _deterministic_first_point,
+    "Powell": _not_parallel | _sequential,
+    "PSO": {},
+    "PymooNSGA2": _no_tell_without_ask | _sequential | _not_parallel,
     "QORandomSearch": {},
     "QOScrHammersleySearch": _deterministic_first_point,
     "QrDE": _deterministic_first_point,
     "RandomSearch": {},
+    "RandomSearchPlusMiddlePoint": _deterministic_first_point,
     "RealSpacePSO": {},
     "RecES": {},
+    "RecombiningPortfolioDiscreteOnePlusOne": _deterministic_first_point,
     "RecMixES": {},
     "RecMutDE": {},
     "RescaledCMA": {},
     "RotatedTwoPointsDE": {},
+    "RotationInvariantDE": {},
     "RPowell": _deterministic_first_point | _sequential | _not_serializable,
     "RSQP": _deterministic_first_point | _sequential | _not_serializable,
     "ScrHaltonSearch": {},
@@ -87,65 +125,45 @@ WORKING = {
     "ScrHammersleySearch": _deterministic_first_point,
     "ScrHammersleySearchPlusMiddlePoint": _deterministic_first_point,
     "Shiwa": {},
+    "SparseDoubleFastGADiscreteOnePlusOne": _deterministic_first_point,
     "TBPSA": {},
     "TripleCMA": {},
     "TwoPointsDE": {},
 }
 
+HANGING_IN_MAX_TRIALS = {
+    "ChainCMAPowell": _max_trials_hangs,
+    "ChainDiagonalCMAPowell": _max_trials_hangs,
+    "ChainMetaModelPowell": _max_trials_hangs,
+    "ChainNaiveTBPSACMAPowell": _max_trials_hangs | _CAN_suggest_more_than_one,
+    "ChainNaiveTBPSAPowell": _max_trials_hangs | _CAN_suggest_more_than_one,
+}
+
+BRANIN_FAILURES = {
+    "AnisotropicAdaptiveDiscreteOnePlusOne": _deterministic_first_point | _not_parallel,
+    "CMandAS2": {},
+    "CMandAS3": {},
+    "DoubleFastGADiscreteOnePlusOne": _deterministic_first_point,
+    "MultiDiscrete": _deterministic_first_point,
+    "NoisyDiscreteOnePlusOne": _deterministic_first_point,
+    "ParaPortfolio": {},
+    "Portfolio": {},
+    "RecombiningPortfolioOptimisticNoisyDiscreteOnePlusOne": _deterministic_first_point,
+    "SQPCMA": {},
+}
+
 NOT_WORKING = {
-    "ASCMADEthird": {},
-    "AdaptiveDiscreteOnePlusOne": {},
-    "AlmostRotationInvariantDE": {},
-    "AnisotropicAdaptiveDiscreteOnePlusOne": {},
     "BO": {},
     "BOSplit": {},
     "BayesOptimBO": {},
-    "CMandAS2": {},
-    "CMandAS3": {},
-    "CauchyLHSSearch": {},
-    "CauchyOnePlusOne": {},
-    "CmaFmin2": {},
-    "DiscreteDoerrOnePlusOne": {},
-    "DoubleFastGADiscreteOnePlusOne": {},
-    "EDA": {},
-    "MetaModelOnePlusOne": {},
-    "MetaTuneRecentering": {},
-    "MultiDiscrete": {},
-    "MultiScaleCMA": {},
-    "NaiveIsoEMNA": {},
-    "NelderMead": {},
-    "NoisyBandit": {},
-    "NoisyDiscreteOnePlusOne": {},
-    "NoisyOnePlusOne": {},
-    "NonNSGAIIES": {},
-    "OnePlusOne": {},
-    "OptimisticDiscreteOnePlusOne": {},
-    "OptimisticNoisyOnePlusOne": {},
+    "DiscreteDoerrOnePlusOne": _deterministic_first_point | _not_parallel,
+    "NelderMead": _sequential | _not_serializable,
     "PCABO": {},
-    "PSO": {},
-    "ParaPortfolio": {},
-    "Portfolio": {},
-    "PortfolioDiscreteOnePlusOne": {},
-    "Powell": {},
-    "PymooNSGA2": {},
-    "QrDE": {},
-    "RandomSearchPlusMiddlePoint": {},
-    "RecombiningPortfolioDiscreteOnePlusOne": {},
-    "RecombiningPortfolioOptimisticNoisyDiscreteOnePlusOne": {},
-    "RotationInvariantDE": {},
     "SPSA": {},
     "SQP": {},
-    "SQPCMA": {},
-    "SparseDoubleFastGADiscreteOnePlusOne": {},
 }
 
 HANGING = {
-    "ChainCMAPowell": {},
-    "ChainDiagonalCMAPowell": {},
-    "ChainMetaModelPowell": {},
-    "ChainMetaModelSQP": {},
-    "ChainNaiveTBPSACMAPowell": {},
-    "ChainNaiveTBPSAPowell": {},
     "Cobyla": {},
     "RCobyla": {},
 }
@@ -153,6 +171,7 @@ HANGING = {
 WIP = {}
 
 MODEL_NAMES = WORKING
+# MODEL_NAMES = WIP
 
 
 @pytest.fixture(autouse=True, params=MODEL_NAMES.keys())
@@ -162,7 +181,7 @@ def _config(request):
 
     if ng.optimizers.registry[request.param].no_parallelization:
         num_workers = 1
-        tweaks.update(_not_parallel)
+        tweaks = {**_not_parallel, **tweaks}
     else:
         num_workers = 10
 
@@ -171,7 +190,9 @@ def _config(request):
 
     test_name, _ = request.node.name.split("[")
     mark = tweaks.get(test_name, None)
-    if mark:
+    if mark == "skip":
+        pytest.skip("Skip test")
+    elif mark:
         request.node.add_marker(mark)
     yield
 
@@ -214,6 +235,9 @@ class TestNevergradOptimizer(BaseAlgoTests):
             if not trials:
                 remaining = MAX_TRIALS - len(objectives)
                 trials = algo.suggest(self.get_num(remaining))
+                if not trials:
+                    assert algo.is_done
+                    break
 
             trial = trials.pop(0)
             results = task(trial.params["x"])
