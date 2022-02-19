@@ -153,7 +153,9 @@ class NevergradOptimizer(BaseAlgorithm):
         state_dict["algo"] = pickle.dumps(self.algo)
         state_dict["_is_done"] = self._is_done
         state_dict["_fresh"] = self._fresh
-        state_dict["_trial_mapping"] = self._trial_mapping
+        state_dict["_trial_mapping"] = {
+            tid: list(sugg) for tid, sugg in self._trial_mapping.items()
+        }
         return state_dict
 
     def set_state(self, state_dict):
@@ -163,6 +165,9 @@ class NevergradOptimizer(BaseAlgorithm):
         """
         super().set_state(state_dict)
         self.algo = pickle.loads(state_dict["algo"])
+        self._is_done = state_dict["_is_done"]
+        self._fresh = state_dict["_fresh"]
+        self._trial_mapping = state_dict["_trial_mapping"]
 
     def _associate_trial(self, trial, suggestion):
         """Associate a trial with a Nevergrad suggestion.
