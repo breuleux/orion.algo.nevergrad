@@ -231,7 +231,7 @@ class NevergradOptimizer(BaseAlgorithm):
 
         """
         attempts = 0
-        max_attempts = num + 5
+        max_attempts = num + 100
         trials = []
         while len(trials) < num and attempts < max_attempts and self._can_produce():
             attempts += 1
