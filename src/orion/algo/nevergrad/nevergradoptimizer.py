@@ -125,6 +125,8 @@ class NevergradOptimizer(BaseAlgorithm):
         )
         self.algo.enable_pickling()
         self._trial_mapping = {}
+        self._fresh = True
+        self._is_done = False
         super().__init__(
             space,
             model_name=model_name,
@@ -149,6 +151,9 @@ class NevergradOptimizer(BaseAlgorithm):
         """Return a state dict that can be used to reset the state of the algorithm."""
         state_dict = super().state_dict
         state_dict["algo"] = pickle.dumps(self.algo)
+        state_dict["_is_done"] = self._is_done
+        state_dict["_fresh"] = self._fresh
+        state_dict["_trial_mapping"] = self._trial_mapping
         return state_dict
 
     def set_state(self, state_dict):
@@ -238,6 +243,11 @@ class NevergradOptimizer(BaseAlgorithm):
             trial = self._ask()
             if trial is not None:
                 trials.append(trial)
+
+        if not trials and self._can_produce():
+            self._is_done = True
+
+        self._fresh = False
         return trials
 
     def observe(self, trials):
@@ -262,5 +272,10 @@ class NevergradOptimizer(BaseAlgorithm):
                 for suggestion in suggestions:
                     self.algo.tell(suggestion, trial.objective.value)
                 self._trial_mapping[tid] = (trial, [])
+                self._fresh = True
 
         super().observe(trials)
+
+    @property
+    def is_done(self):
+        return self._is_done or super().is_done
