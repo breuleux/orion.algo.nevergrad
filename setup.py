@@ -39,7 +39,12 @@ setup_args = dict(
     ],
     tests_require=tests_require,
     setup_requires=["setuptools", "pytest-runner>=2.0,<3dev"],
-    extras_require=dict(test=tests_require),
+    extras_require=dict(
+        test=tests_require,
+        fcmaes=["fcmaes"],
+        pymoo=["pymoo"],
+        bayes_optim=["bayes-optim"],
+    ),
     # "Zipped eggs don't play nicely with namespace packaging"
     # from https://github.com/pypa/sample-namespace-packages
     zip_safe=False,

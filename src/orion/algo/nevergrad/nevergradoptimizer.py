@@ -99,6 +99,26 @@ def _(_, dim):
     return upper
 
 
+NOT_WORKING = {
+    "BOSplit",
+    "BayesOptimBO",
+    "DiscreteDoerrOnePlusOne",
+    "NelderMead",
+    "PCABO",
+    "SPSA",
+    "SQP",
+    "NoisyBandit",
+    "NoisyOnePlusOne",
+    "OptimisticDiscreteOnePlusOne",
+    "OptimisticNoisyOnePlusOne",
+    "Powell",
+    "CmaFmin2",
+    "RPowell",
+    "RSQP",
+    "PymooNSGA2",
+}
+
+
 class NevergradOptimizer(BaseAlgorithm):
     """TODO: Class docstring
 
@@ -119,6 +139,9 @@ class NevergradOptimizer(BaseAlgorithm):
     def __init__(
         self, space, model_name="NGOpt", seed=None, budget=100, num_workers=10
     ):
+        if model_name in NOT_WORKING:
+            raise ValueError(f"Model {model_name} is not supported.")
+
         param = to_ng_space(space)
         self.algo = ng.optimizers.registry[model_name](
             parametrization=param, budget=budget, num_workers=num_workers
