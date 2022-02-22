@@ -4,6 +4,7 @@ import pytest
 from orion.benchmark.task.branin import Branin
 from orion.core.utils import backward
 from orion.testing.algo import BaseAlgoTests, phase
+
 from orion.algo.nevergrad.nevergradoptimizer import (
     NOT_WORKING as NOT_WORKING_MODEL_NAMES,
 )
