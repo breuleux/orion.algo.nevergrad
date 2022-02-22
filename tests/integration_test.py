@@ -47,6 +47,7 @@ _max_trials_hangs = {"test_is_done_max_trials": "skip"}
 
 
 def merge_dicts(*dicts):
+    """Merge dictionaries into first one."""
     merged_dict = dict()
     for dict_to_merge in dicts:
         merged_dict.update(dict_to_merge)
@@ -294,9 +295,11 @@ class TestNevergradOptimizer(BaseAlgoTests):
         assert min(objectives) <= 10
 
     def test_suggest_n(self, mocker, num, attr):
-        """Verify that suggest returns correct number of trials if ``num`` is specified in ``suggest``."""
+        """Verify that suggest returns correct number of trials if ``num`` is specified in
+        ``suggest``.
+        """
         algo = self.create_algo()
-        spy = self.spy_phase(mocker, num, algo, attr)
+        self.spy_phase(mocker, num, algo, attr)
         trials = algo.suggest(5)
         assert 5 >= len(trials) >= 1
 
