@@ -100,6 +100,7 @@ def _(_, dim):
 
 
 NOT_WORKING = {
+    "BO",
     "BOSplit",
     "BayesOptimBO",
     "DiscreteDoerrOnePlusOne",

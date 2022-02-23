@@ -140,7 +140,6 @@ WORKING = {
     "TBPSA": {},
     "TripleCMA": {},
     "TwoPointsDE": {},
-    "BO": {},
 }
 
 HANGING_IN_MAX_TRIALS = {
@@ -170,6 +169,7 @@ BRANIN_FAILURES = {
 }
 
 NOT_WORKING = {
+    "BO": {},
     "BOSplit": {},
     "BayesOptimBO": {},
     "DiscreteDoerrOnePlusOne": merge_dicts(_deterministic_first_point, _not_parallel),
